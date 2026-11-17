@@ -6,14 +6,15 @@
 
 | Lớp | Model + cỡ | Ngưỡng | Vì sao (dẫn `run_id` trong `model_log.csv`) |
 |---|---|---|---|
-| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | <<theo lớp, từ threshold_sweep>> | <<>> |
-| three_wheeler | <<YOLOE-26s, prompt: ...>> | <<>> | <<>> |
+| person / bicycle / motorbike / car / bus / truck | <<YOLO26m>> | person 0.5 · motorbike 0.35 · bicycle / car / bus / truck: mặc định `--conf` 0.3 | Theo `qc/threshold_sweep.md` (mục tiêu recall ≥ 90%, 4 ảnh gold). person 0.5: recall 13/14 = 93%, precision 13/22 = 59%; lên 0.55 thì recall tụt còn 11/14 = 79%. motorbike 0.35: recall 9/10 = 90%, precision 9/12 = 75%; lên 0.4 thì recall còn 8/10 = 80%. bicycle chỉ có 3 vật gold, bus và truck không có vật gold nào (< 5) nên không chọn ngưỡng riêng. car: không ngưỡng nào ≤ 0.5 đạt 90% (tối đa 6/7 = 86%, 1 xe sót ở mọi ngưỡng), nên giữ 0.3. Ở 0.3, bus có 1 box và truck có 2 box thừa trên gold dù gold không có bus/truck nào; nghi là tuk-tuk bị gọi bus/truck như ở r01, r08a (`model_log.csv`). |
+| three_wheeler | <<YOLOE-26s, prompt: ...>> | 0.15 | 0.15: recall 6/6 = 100%, precision 6/9 = 67%; lên 0.2 thì recall còn 5/6 = 83%, lên 0.25 còn 4/6 = 67%. Khớp với r04/r08c: xích lô đúng ở img_032 chỉ đạt 0.27, thấp hơn box sai 0.37–0.40, nên phải để ngưỡng thấp và review tay. |
 
+- Chuỗi ngưỡng theo lớp (từ `qc/threshold_sweep.md`, dùng cho Part 4): `--thr "person=0.5,motorbike=0.35,three_wheeler=0.15"` (lớp không có trong chuỗi dùng `--conf 0.3`)
 - Lệnh `merge_prelabels.py` đã dùng (dán nguyên): <<>>
 - **Phiên bản SAM bạn chọn** (SAM 1 / 2.1 / 3) và lý do: <<chất lượng mask, tốc độ, RAM, quyền truy cập>>
 - Lỗi nào **không sửa được bằng đổi ngưỡng** (ví dụ tuk-tuk bị gọi `car`)? Sửa thế nào? <<>>
 - Box **điểm cao mà sai** hoặc **điểm thấp mà đúng** (ảnh nào): <<>>
-- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: <<>>
+- Giới hạn: chọn ngưỡng trên chính gold (4 ảnh) nên số đo máy trên gold là lạc quan: ngưỡng được chọn và chấm trên cùng 4 ảnh gold. Mỗi lớp chỉ có 6–14 vật, nên chỉ cần thêm hoặc bớt 1 vật là recall đổi 7–17 điểm %. Vì vậy các ngưỡng trên chỉ là ước lượng thô; precision/recall thật trên 24 ảnh batch sẽ thấp hơn.
 
 ## 2. AI error profile (từ `qc/review_stats.md`)
 
