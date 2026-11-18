@@ -4,8 +4,8 @@
 - MSHV: 2A202603248
 - Lớp (L2 / L3 / khác): L2
 - Tài khoản GitHub: HieuGit05
-- Repo bài nộp (URL): https://github.com/HieuGit05/K5-L23-Day08-AI-Assisted-Labeling
-- Commit chốt bài (hash): 5fa2f12ee6e96366c6c4b175a9ad93149b8cb34a
+- Repo bài nộp (URL): https://github.com/HieuGit05/K5-L23-DAY08-2A202603248-DangTrungHieu-AIPrelabel
+- Commit chốt bài (hash): a47b96f
 - Máy: Windows 11, GPU NVIDIA GeForce RTX 4050 Laptop (CUDA, torch 2.6.0+cu124)
 - CVAT (Docker): v2.81.0
 
