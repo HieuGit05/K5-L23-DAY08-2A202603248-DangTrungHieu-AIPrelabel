@@ -1,6 +1,5 @@
 # Báo cáo Day 08 — 2A202603248 - Đặng Trung Hiếu
 
-> Một file duy nhất cho cả bài (đã gộp recipe, QC và ghi chú cá nhân). Mọi con số kèm **mẫu số** và nguồn (file nào). Viết bằng lời của bạn.
 
 ## 1. Model và recipe (Part 2–3)
 
@@ -168,6 +167,11 @@ Việc cần làm tiếp (vòng Rework):
   - **Mình tự làm, không dùng AI:** gán gold 4 ảnh (Part 1), review 24 ảnh trong CVAT (Part 4), và chọn quyết định Rework.
   - **Cách kiểm:** mọi con số trong báo cáo đều đối chiếu được với file trong `submission/qc/` hoặc `model_log.csv`.
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? không dùng, gold gán tay
+- `can_review`: **không tick box nào**, cả ở gold (0/40 đối tượng) lẫn batch (0/433).
+  - Khi gán 4 ảnh gold, mình không gặp ca nào phân vân về quy tắc, nên không tick là đúng với cảm nhận lúc đó.
+  - Nhưng nhìn lại thì "không phân vân" chưa chắc là "không có ca mơ hồ". Khi review batch và calibration mới lộ ra các ca guideline chưa rõ: dãy xe máy đỗ dày (img_006, câu hỏi mở 2), xích lô bị máy đóng 2 box (img_035), người ngồi trong xe ba bánh (img_013, CAL-02). Những ca này lẽ ra nên được tick `can_review` khi duyệt batch.
+  - Hệ quả: mẫu QC có 0 ca khó (mục 7), và nguồn `can_review` trong calibration để trống.
+  - Lần sau mình sẽ tick `can_review` mỗi khi phải tự suy ra quy tắc mà guideline không ghi sẵn, không đợi tới lúc thấy mình phân vân.
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: RTX4050, CVAT local
 - Dùng cache `data/cache/` thay vì tự chạy? không
 - Lỗi / bug script đã gặp (nếu có): **`prelabel.py` ghi đè lịch sử chạy trong `work/runs.csv`**.
