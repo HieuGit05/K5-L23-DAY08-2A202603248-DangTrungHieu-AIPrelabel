@@ -1,0 +1,8 @@
+image,object_id,error_type,reviewer,note
+img_003.jpg,,khong,AI-draft (Claude),"Không thấy lỗi rõ ở ảnh 1024 px: ba gác #2 có 1 box ôm cả mui và thùng (đúng CAL-05); người ngồi trên xe #3, #8 có box riêng"
+img_006.jpg,,bo_sot,AI-draft (Claude),"Dãy xe máy đỗ sát tường bên trái: sau #64 còn khoảng 3 xe nhìn thấy rõ (x≈400-500, y≈400-490) không có box và không có ignore_region (đúng ca câu hỏi mở 2, chưa chốt ở v1.1)"
+img_014.jpg,132,thua,AI-draft (Claude),"three_wheeler 0.19 ở mép trái là sạp/bàn hàng, không phải xe"
+img_014.jpg,133,thua,AI-draft (Claude),"three_wheeler 0.33 ôm gánh hàng (đòn gánh + nồi) của người phụ nữ #131, không phải xe"
+img_031.jpg,368,sai_lop,AI-draft (Claude),"Người phụ nữ đội nón bị gán bicycle; đúng là person (bẫy wrong_class bị lọt)"
+img_031.jpg,367,sai_vi_tri_kich_thuoc,AI-draft (Claude),"Box bicycle chỉ ôm nửa trước (bánh trước + giỏ, x 594-821); xe đạp thật kéo từ bánh sau ở x≈245"
+img_035.jpg,422,thua,AI-draft (Claude),"three_wheeler 0.48 chỉ ôm phần phía trên xích lô (y 428-462), trùng xe với #421 đã ôm thân xích lô; một xe nhiều box (CAL-05)"
