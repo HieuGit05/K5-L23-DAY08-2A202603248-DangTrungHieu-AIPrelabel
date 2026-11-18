@@ -49,6 +49,7 @@ Nguồn: `qc/review_stats.md`; 24 ảnh batch, đã loại 27 đối tượng qu
   - Bắt được 1 loose (img_009) và 1 extra (img_017).
   - Lọt toàn bộ **wrong_class 3/3** (img_010, img_031, img_033) và **missing 3/3** (img_014, img_018, img_034).
   - Lọt thêm loose 2/3 (img_021, img_026) và extra 2/3 (img_013, img_024).
+  - Lưu ý về bẫy missing ở img_014: theo `traps_key.json` (chỉ mở sau khi export), box bị bẫy xoá ở `[291,379,85,168]` là một box three_wheeler **sai** của YOLOE đặt lên gánh hàng của người phụ nữ, không phải xe thật. Vì vậy lọt bẫy này không làm nhãn cuối tệ đi: không vẽ lại box đó mới là đúng. Bẫy loại missing chỉ đo đúng thiên kiến khi vật bị xoá là vật thật. Bẫy này cho thấy một bẫy cài ngẫu nhiên lên pre-label vốn đã sai thì có thể đo sai.
 - Vì sao lọt (đã bỏ bước nào của checklist)?
   - **Chỉ sửa ở nửa đầu lô.** Mọi chỉnh sửa nằm trong 10 ảnh đầu (img_003 → img_017; 6/10 ảnh có sửa). 14 ảnh sau (img_018 → img_035) có 0/14 ảnh được sửa. 7/10 bẫy lọt nằm ở 14 ảnh này.
   - **Bỏ bước 1 (ẩn nhãn máy, tự đếm vật trước).** Bẫy missing là vật bị xoá khỏi pre-label: nhìn nhãn máy trước thì không thấy thiếu gì, nên lọt 3/3.
@@ -169,5 +170,10 @@ Việc cần làm tiếp (vòng Rework):
 - Gold có bị nhiễm không (bạn có nhìn pre-label hay hỏi AI trước khi gán xong)? không dùng, gold gán tay
 - Máy / GPU / CVAT dùng; vướng mắc cài đặt: RTX4050, CVAT local
 - Dùng cache `data/cache/` thay vì tự chạy? không
-- Lỗi / bug script đã gặp (nếu có): không
+- Lỗi / bug script đã gặp (nếu có): **`prelabel.py` ghi đè lịch sử chạy trong `work/runs.csv`**.
+  - Khi chạy lại với cùng `--out`, script xoá dòng cũ có cùng `out` rồi ghi dòng mới (`scripts/prelabel.py`, dòng 420).
+  - `run_id` được đánh số theo số dòng còn lại (`r{len(rows)+1}`), nên sau khi bị xoá thì bị trùng số.
+  - Hậu quả: các lượt yolo26-s ở pilot (r02, r03), YOLOE (r04), SAM (r05) và lượt `--split all` cỡ s (r06), r07 đều không còn trong `runs.csv`, vì sau đó mình chạy lại cùng thư mục `--out` bằng yolo26-m. Có 6 dòng cùng mang `run_id` = `r08`.
+  - Vì vậy `model_log.csv` không khớp từng dòng với `runs.csv` hiện tại. Thông số của các lượt bị ghi đè được chép vào `model_log.csv` trước khi chạy lại. Mình đặt lại ID là r08a–r08d và r09 để không trùng.
+  - Cách tránh: mỗi lượt chạy dùng một thư mục `--out` riêng (ví dụ `t_y26_s`, `t_y26_m`).
 - Một điều bạn làm khác lần sau: dùng model tool để gán nhãn
