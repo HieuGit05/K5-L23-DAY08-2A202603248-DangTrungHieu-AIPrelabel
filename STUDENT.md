@@ -5,7 +5,7 @@
 - Lớp (L2 / L3 / khác): L2
 - Tài khoản GitHub: HieuGit05
 - Repo bài nộp (URL): https://github.com/HieuGit05/K5-L23-DAY08-2A202603248-DangTrungHieu-AIPrelabel
-- Commit chốt bài (hash): a47b96f
+- Commit chốt bài (hash): 7e225bd
 - Máy: Windows 11, GPU NVIDIA GeForce RTX 4050 Laptop (CUDA, torch 2.6.0+cu124)
 - CVAT (Docker): v2.81.0
 
